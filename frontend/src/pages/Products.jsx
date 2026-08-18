@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
+import { API_BASE_URL } from "../api";
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -12,7 +13,7 @@ function Products() {
   const [sort, setSort] = useState("default");
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/products")
+    fetch(`${API_BASE_URL}/api/products`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch products");
@@ -32,7 +33,7 @@ function Products() {
       });
   }, []);
 
-  // Get unique categories from products
+  // Get unique categories
   const categories = [
     "All",
     ...new Set(products.map((product) => product.category)),
@@ -76,123 +77,202 @@ function Products() {
   }
 
   return (
-    <main>
-      <section className="products-section">
+    <main className="bg-light min-vh-100">
 
-        <div className="section-heading">
-          <span>SHOP</span>
+      <section className="py-5">
 
-          <h1>All Products</h1>
+        <div className="container">
 
-          <p>
-            Find products that match your needs.
-          </p>
-        </div>
+          {/* Page heading */}
+          <div className="text-center mb-5">
 
-        {!loading && !error && (
-          <div className="product-controls">
+            <span className="text-uppercase fw-bold text-secondary small">
+              Shop
+            </span>
 
-            {/* SEARCH */}
-            <div className="search-box">
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </div>
+            <h1 className="display-5 fw-bold mt-2">
+              All Products
+            </h1>
 
-            {/* CATEGORY */}
-            <div className="filter-box">
-              <label>Category</label>
-
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                {categories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat === "All" ? "All Categories" : cat}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* SORT */}
-            <div className="filter-box">
-              <label>Sort</label>
-
-              <select
-                value={sort}
-                onChange={(e) => setSort(e.target.value)}
-              >
-                <option value="default">
-                  Default
-                </option>
-
-                <option value="price-low">
-                  Price: Low to High
-                </option>
-
-                <option value="price-high">
-                  Price: High to Low
-                </option>
-
-                <option value="name-az">
-                  Name: A to Z
-                </option>
-
-                <option value="name-za">
-                  Name: Z to A
-                </option>
-              </select>
-            </div>
-
-          </div>
-        )}
-
-        {loading && (
-          <p style={{ textAlign: "center" }}>
-            Loading products...
-          </p>
-        )}
-
-        {error && (
-          <p style={{ textAlign: "center", color: "red" }}>
-            {error}
-          </p>
-        )}
-
-        {!loading && !error && (
-          <>
-            <p className="results-count">
-              Showing {filteredProducts.length} of {products.length} products
+            <p className="text-secondary fs-5">
+              Find products that match your needs.
             </p>
 
-            {filteredProducts.length > 0 ? (
-              <div className="product-grid">
+          </div>
 
-                {filteredProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
+          {/* Loading */}
+          {loading && (
+            <div className="text-center py-5">
+              <div
+                className="spinner-border text-dark"
+                role="status"
+              >
+                <span className="visually-hidden">
+                  Loading...
+                </span>
+              </div>
+
+              <p className="mt-3 text-secondary">
+                Loading products...
+              </p>
+            </div>
+          )}
+
+          {/* Error */}
+          {error && (
+            <div className="alert alert-danger text-center">
+              {error}
+            </div>
+          )}
+
+          {/* Controls */}
+          {!loading && !error && (
+            <>
+
+              <div className="row g-3 mb-4">
+
+                {/* Search */}
+                <div className="col-lg-6">
+
+                  <label className="form-label fw-semibold">
+                    Search
+                  </label>
+
+                  <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    placeholder="Search products..."
+                    value={search}
+                    onChange={(e) =>
+                      setSearch(e.target.value)
+                    }
                   />
-                ))}
+
+                </div>
+
+                {/* Category */}
+                <div className="col-md-6 col-lg-3">
+
+                  <label className="form-label fw-semibold">
+                    Category
+                  </label>
+
+                  <select
+                    className="form-select form-select-lg"
+                    value={category}
+                    onChange={(e) =>
+                      setCategory(e.target.value)
+                    }
+                  >
+                    {categories.map((cat) => (
+                      <option
+                        key={cat}
+                        value={cat}
+                      >
+                        {cat === "All"
+                          ? "All Categories"
+                          : cat}
+                      </option>
+                    ))}
+                  </select>
+
+                </div>
+
+                {/* Sort */}
+                <div className="col-md-6 col-lg-3">
+
+                  <label className="form-label fw-semibold">
+                    Sort
+                  </label>
+
+                  <select
+                    className="form-select form-select-lg"
+                    value={sort}
+                    onChange={(e) =>
+                      setSort(e.target.value)
+                    }
+                  >
+                    <option value="default">
+                      Default
+                    </option>
+
+                    <option value="price-low">
+                      Price: Low to High
+                    </option>
+
+                    <option value="price-high">
+                      Price: High to Low
+                    </option>
+
+                    <option value="name-az">
+                      Name: A to Z
+                    </option>
+
+                    <option value="name-za">
+                      Name: Z to A
+                    </option>
+                  </select>
+
+                </div>
 
               </div>
-            ) : (
-              <div className="no-products">
-                <h2>No products found</h2>
 
-                <p>
-                  Try changing your search or filter.
-                </p>
-              </div>
-            )}
-          </>
-        )}
+              {/* Results count */}
+              <p className="text-secondary mb-4">
+                Showing{" "}
+                <strong>
+                  {filteredProducts.length}
+                </strong>{" "}
+                of{" "}
+                <strong>
+                  {products.length}
+                </strong>{" "}
+                products
+              </p>
+
+              {/* Products */}
+              {filteredProducts.length > 0 ? (
+
+                <div className="row g-4">
+
+                  {filteredProducts.map((product) => (
+
+                    <div
+                      className="col-sm-6 col-lg-4 col-xl-3"
+                      key={product.id}
+                    >
+                      <ProductCard
+                        product={product}
+                      />
+                    </div>
+
+                  ))}
+
+                </div>
+
+              ) : (
+
+                <div className="text-center py-5">
+
+                  <h2 className="fw-bold">
+                    No products found
+                  </h2>
+
+                  <p className="text-secondary">
+                    Try changing your search or filter.
+                  </p>
+
+                </div>
+
+              )}
+
+            </>
+          )}
+
+        </div>
 
       </section>
+
     </main>
   );
 }

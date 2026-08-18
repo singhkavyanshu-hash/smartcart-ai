@@ -1,30 +1,42 @@
+import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Checkout from "./pages/Checkout";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
 import Orders from "./pages/Orders";
-import Navbar from "./components/Navbar";
+import OrderDetails from "./pages/OrderDetails";
 
+import Navbar from "./components/Navbar";
 import AIAssistant from "./components/AIAssistant";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
+  const [isAIChatOpen, setIsAIChatOpen] = useState(false);
+
   return (
     <BrowserRouter>
 
-      {/* Navbar appears on every page */}
+      {/* Navbar */}
       <Navbar />
 
+      {/* Routes */}
       <Routes>
+
+        {/* Public Routes */}
 
         <Route
           path="/"
-          element={<Home />}
+          element={
+            <Home
+              openAIChat={() => setIsAIChatOpen(true)}
+            />
+          }
         />
 
         <Route
@@ -52,25 +64,42 @@ function App() {
           element={<Register />}
         />
 
-        <Route
-          path="/checkout"
-          element={<Checkout />}
-        />
 
-        <Route
-          path="/order-success"
-          element={<OrderSuccess />}
-        />
+        {/* Protected Routes */}
 
-        <Route
-          path="/orders"
-          element={<Orders />}
-        />
+        <Route element={<ProtectedRoute />}>
+
+          <Route
+            path="/checkout"
+            element={<Checkout />}
+          />
+
+          <Route
+            path="/orders"
+            element={<Orders />}
+          />
+
+          <Route
+            path="/orders/:id"
+            element={<OrderDetails />}
+          />
+
+          <Route
+            path="/order-success"
+            element={<OrderSuccess />}
+          />
+
+        </Route>
 
       </Routes>
 
-      {/* AI Assistant appears on every page */}
-      <AIAssistant />
+
+      {/* AI Assistant */}
+
+      <AIAssistant
+        isOpen={isAIChatOpen}
+        setIsOpen={setIsAIChatOpen}
+      />
 
     </BrowserRouter>
   );

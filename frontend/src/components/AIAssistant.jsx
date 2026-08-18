@@ -1,17 +1,20 @@
 import { useState } from "react";
-import { useCart } from "../context/CartContext";
+import { useCart } from "../context/useCart";
+import { API_BASE_URL } from "../api";
 
-function AIAssistant() {
- const {
-  cart,
-  addToCart,
-  removeFromCart,
-  increaseQuantity,
-  decreaseQuantity,
-  clearCart,
-} = useCart();
-  const [isOpen, setIsOpen] = useState(false);
+function AIAssistant({ isOpen, setIsOpen }) {
+
+  const {
+    cart,
+    addToCart,
+    removeFromCart,
+    increaseQuantity,
+    decreaseQuantity,
+    clearCart,
+  } = useCart();
+
   const [message, setMessage] = useState("");
+
   const [messages, setMessages] = useState([
     {
       role: "assistant",
@@ -19,7 +22,9 @@ function AIAssistant() {
         "Hi! 👋 I'm SmartCart AI. I can help you find products, compare prices, and choose products within your budget.",
     },
   ]);
+
   const [loading, setLoading] = useState(false);
+
 
   async function sendMessage(e) {
     e.preventDefault();
@@ -30,6 +35,7 @@ function AIAssistant() {
 
     const userMessage = message.trim();
 
+    // Add user's message
     setMessages((currentMessages) => [
       ...currentMessages,
       {
@@ -42,17 +48,20 @@ function AIAssistant() {
     setLoading(true);
 
     try {
+
       const response = await fetch(
-        "http://localhost:5000/api/ai/chat",
+        `${API_BASE_URL}/api/ai/chat`,
         {
           method: "POST",
+
           headers: {
             "Content-Type": "application/json",
           },
+
           body: JSON.stringify({
-  message: userMessage,
-  cart,
-}),
+            message: userMessage,
+            cart,
+          }),
         }
       );
 
@@ -64,35 +73,62 @@ function AIAssistant() {
         );
       }
 
-   if (data.action === "add_to_cart" && data.product) {
-  addToCart(data.product);
-}
 
-if (data.action === "remove_from_cart" && data.productId) {
-  removeFromCart(data.productId);
-}
+      /* ================= AI CART ACTIONS ================= */
 
-if (data.action === "increase_quantity" && data.productId) {
-  increaseQuantity(data.productId);
-}
+      if (
+        data.action === "add_to_cart" &&
+        data.product
+      ) {
+        addToCart(data.product);
+      }
 
-if (data.action === "decrease_quantity" && data.productId) {
-  decreaseQuantity(data.productId);
-}
 
-if (data.action === "clear_cart") {
-  clearCart();
-}
+      if (
+        data.action === "remove_from_cart" &&
+        data.productId
+      ) {
+        removeFromCart(data.productId);
+      }
 
-setMessages((currentMessages) => [
-  ...currentMessages,
-  {
-    role: "assistant",
-    content: data.reply,
-  },
-]);
+
+      if (
+        data.action === "increase_quantity" &&
+        data.productId
+      ) {
+        increaseQuantity(data.productId);
+      }
+
+
+      if (
+        data.action === "decrease_quantity" &&
+        data.productId
+      ) {
+        decreaseQuantity(data.productId);
+      }
+
+
+      if (data.action === "clear_cart") {
+        clearCart();
+      }
+
+
+      /* ================= AI RESPONSE ================= */
+
+      setMessages((currentMessages) => [
+        ...currentMessages,
+        {
+          role: "assistant",
+          content: data.reply,
+        },
+      ]);
+
     } catch (error) {
-      console.error("AI Assistant error:", error);
+
+      console.error(
+        "AI Assistant error:",
+        error
+      );
 
       setMessages((currentMessages) => [
         ...currentMessages,
@@ -102,33 +138,58 @@ setMessages((currentMessages) => [
             "Sorry, I'm having trouble connecting right now. Please try again.",
         },
       ]);
+
     } finally {
+
       setLoading(false);
+
     }
   }
 
+
   return (
     <>
+
+      {/* ================= CHAT WINDOW ================= */}
+
       {isOpen && (
+
         <div className="ai-chat-window">
 
+          {/* HEADER */}
+
           <div className="ai-chat-header">
+
             <div>
-              <strong>🤖 SmartCart AI</strong>
-              <span>Shopping Assistant</span>
+
+              <strong>
+                🤖 SmartCart AI
+              </strong>
+
+              <span>
+                Shopping Assistant
+              </span>
+
             </div>
+
 
             <button
               className="ai-close-btn"
               onClick={() => setIsOpen(false)}
+              aria-label="Close SmartCart AI"
             >
               ×
             </button>
+
           </div>
+
+
+          {/* ================= MESSAGES ================= */}
 
           <div className="ai-chat-messages">
 
             {messages.map((msg, index) => (
+
               <div
                 key={index}
                 className={`ai-message ${
@@ -139,46 +200,69 @@ setMessages((currentMessages) => [
               >
                 {msg.content}
               </div>
+
             ))}
 
+
             {loading && (
+
               <div className="ai-message ai-bot-message ai-loading">
                 SmartCart AI is typing...
               </div>
+
             )}
 
           </div>
+
+
+          {/* ================= INPUT ================= */}
 
           <form
             className="ai-chat-input"
             onSubmit={sendMessage}
           >
+
             <input
               type="text"
               value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              onChange={(e) =>
+                setMessage(e.target.value)
+              }
               placeholder="Ask about products..."
               disabled={loading}
             />
 
+
             <button
               type="submit"
-              disabled={loading || !message.trim()}
+              disabled={
+                loading ||
+                !message.trim()
+              }
+              aria-label="Send message"
             >
               ➤
             </button>
+
           </form>
 
         </div>
+
       )}
+
+
+      {/* ================= FLOATING BUTTON ================= */}
 
       <button
         className="ai-floating-btn"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() =>
+          setIsOpen(!isOpen)
+        }
         aria-label="Open SmartCart AI"
       >
         🤖
       </button>
+
     </>
   );
 }

@@ -1,32 +1,57 @@
-import { useCart } from "../context/CartContext";
+import { useCart } from "../context/useCart";
 
 function ProductCard({ product }) {
   const { addToCart } = useCart();
 
   return (
-    <div className="product-card">
-      <div className="product-image">
+    <div className="card h-100 border shadow-sm product-bootstrap-card">
+
+      {/* Product image */}
+      <div
+        className="bg-light d-flex align-items-center justify-content-center"
+        style={{
+          height: "250px",
+          fontSize: "90px",
+        }}
+      >
         {product.image}
       </div>
 
-      <div className="product-info">
-        <h3>{product.name}</h3>
+      {/* Product information */}
+      <div className="card-body d-flex flex-column">
 
-        <p>{product.description}</p>
+        <h5 className="card-title fw-bold">
+          {product.name}
+        </h5>
 
-        <div className="product-bottom">
-          <strong>
-            ₹{Number(product.price).toLocaleString("en-IN")}
-          </strong>
+        <p className="card-text text-secondary">
+          {product.description}
+        </p>
 
-          <button
-            className="add-cart-btn"
-            onClick={() => addToCart(product)}
-          >
-            Add to Cart
-          </button>
+        {/* Bottom section */}
+        <div className="mt-auto pt-3">
+
+          <div className="d-flex justify-content-between align-items-center gap-2">
+
+            <strong className="fs-5">
+              ₹{Number(product.price).toLocaleString("en-IN")}
+            </strong>
+
+            <button
+              type="button"
+              className="btn btn-dark"
+              onClick={() => addToCart(product)}
+              disabled={product.stock === 0}
+            >
+              {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
+            </button>
+
+          </div>
+
         </div>
+
       </div>
+
     </div>
   );
 }

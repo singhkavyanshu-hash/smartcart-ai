@@ -1,16 +1,109 @@
-# React + Vite
+# SmartCart 🛒
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SmartCart is a full-stack e-commerce web application built with React, Node.js, Express.js and PostgreSQL.
 
-Currently, two official plugins are available:
+The application provides a complete shopping experience including user authentication, product browsing, cart management, checkout, order management, stock management and an AI shopping assistant.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Features
 
-## React Compiler
+### User Authentication
+- User registration
+- User login
+- JWT-based authentication
+- Protected routes
+- Persistent login using localStorage
+- Logout functionality
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Product Management
+- Browse products
+- Product details
+- Product categories
+- Product search
+- Product filtering
+- Product sorting
+- Stock availability
 
-## Expanding the ESLint configuration
+### Shopping Cart
+- Add products to cart
+- Remove products
+- Increase/decrease quantity
+- Cart total calculation
+- Stock validation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Checkout
+- Customer shipping details
+- Order validation
+- Database-based product pricing
+- Stock validation
+- Transaction-based order creation
+- Automatic stock deduction
+
+### Orders
+- View previous orders
+- View individual order details
+- Order ID
+- Order date
+- Ordered products
+- Total amount
+- Shipping details
+
+### SmartCart AI
+- AI-powered shopping assistant
+- Product recommendations
+- Shopping assistance
+- Cart-related interactions
+
+## 🛠️ Tech Stack
+
+### Frontend
+- React
+- React Router
+- JavaScript
+- Bootstrap
+- CSS
+- Vite
+
+### Backend
+- Node.js
+- Express.js
+- REST API
+- JWT Authentication
+
+### Database
+- PostgreSQL
+
+### Other Technologies
+- Git
+- GitHub
+- OpenRouter API
+
+## 📁 Project Structure
+
+```text
+SmartCart/
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── hooks/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   ├── api.js
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   │
+│   ├── .env.example
+│   ├── package.json
+│   └── README.md
+│
+└── backend/
+    ├── config/
+    ├── controllers/
+    ├── middleware/
+    ├── routes/
+    ├── services/
+    ├── .env.example
+    ├── package.json
+    └── server.js

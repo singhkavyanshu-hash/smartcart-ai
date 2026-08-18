@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
+import { API_BASE_URL } from "../api";
 
-function Home() {
+function Home({ openAIChat }) {
   const [featuredProducts, setFeaturedProducts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/products")
+    fetch(`${API_BASE_URL}/api/products`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch products");
@@ -16,7 +17,9 @@ function Home() {
       })
       .then((data) => {
         console.log("Products received:", data);
-        setFeaturedProducts(data);
+
+        // Show only a few products on homepage
+        setFeaturedProducts(data.slice(0, 4));
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
@@ -28,33 +31,50 @@ function Home() {
 
       {/* ================= HERO SECTION ================= */}
 
-      <section className="hero">
-        <div className="hero-content">
+      <section className="bg-light py-5">
+        <div className="container py-5">
+          <div className="row justify-content-center text-center">
 
-          <span className="hero-badge">
-            ✨ AI-powered shopping
-          </span>
+            <div className="col-lg-9">
 
-          <h1>
-            Shop smarter.
-            <br />
-            Choose better.
-          </h1>
+              {/* Badge */}
+              <span className="badge bg-white text-dark border rounded-pill px-4 py-3 mb-4 shadow-sm">
+                ✨ AI-powered shopping
+              </span>
 
-          <p>
-            Discover products that match your needs with
-            intelligent recommendations and personalized shopping.
-          </p>
+              {/* Heading */}
+              <h1 className="display-1 fw-bold text-dark mb-4">
+                Shop smarter.
+                <br />
+                Choose better.
+              </h1>
 
-          <div className="hero-buttons">
+              {/* Description */}
+              <p className="lead text-secondary mx-auto mb-4" style={{ maxWidth: "750px" }}>
+                Discover products that match your needs with
+                intelligent recommendations and personalized shopping.
+              </p>
 
-            <Link to="/products" className="primary-btn">
-              Explore Products
-            </Link>
+              {/* Buttons */}
+              <div className="d-flex justify-content-center gap-3 flex-wrap">
 
-            <button className="ai-btn">
-              ✨ Ask SmartCart AI
-            </button>
+                <Link
+                  to="/products"
+                  className="btn btn-dark btn-lg px-4"
+                >
+                  Explore Products
+                </Link>
+
+                <button
+                  className="btn btn-outline-dark btn-lg px-4"
+                  onClick={openAIChat}
+                >
+                  ✨ Ask SmartCart AI
+                </button>
+
+              </div>
+
+            </div>
 
           </div>
         </div>
@@ -63,75 +83,174 @@ function Home() {
 
       {/* ================= CATEGORIES ================= */}
 
-      <section className="categories-section">
+      <section className="py-5">
+        <div className="container py-5">
 
-        <div className="section-heading">
+          {/* Section Heading */}
 
-          <span>EXPLORE</span>
+          <div className="text-center mb-5">
 
-          <h2>Shop by Category</h2>
+            <span className="text-secondary fw-semibold">
+              EXPLORE
+            </span>
 
-          <p>
-            Find exactly what you're looking for.
-          </p>
+            <h2 className="display-5 fw-bold mt-2">
+              Shop by Category
+            </h2>
+
+            <p className="text-secondary fs-5">
+              Find exactly what you're looking for.
+            </p>
+
+          </div>
+
+
+          {/* Category Cards */}
+
+          <div className="row g-4">
+
+            {/* Electronics */}
+
+            <div className="col-12 col-sm-6 col-lg-3">
+              <div className="card h-100 border-0 shadow-sm text-center p-4">
+
+                <div className="display-4 mb-3">
+                  💻
+                </div>
+
+                <h3 className="h5 fw-bold">
+                  Electronics
+                </h3>
+
+                <p className="text-secondary mb-0">
+                  Latest gadgets & technology
+                </p>
+
+              </div>
+            </div>
+
+
+            {/* Fashion */}
+
+            <div className="col-12 col-sm-6 col-lg-3">
+              <div className="card h-100 border-0 shadow-sm text-center p-4">
+
+                <div className="display-4 mb-3">
+                  👕
+                </div>
+
+                <h3 className="h5 fw-bold">
+                  Fashion
+                </h3>
+
+                <p className="text-secondary mb-0">
+                  Style for every occasion
+                </p>
+
+              </div>
+            </div>
+
+
+            {/* Footwear */}
+
+            <div className="col-12 col-sm-6 col-lg-3">
+              <div className="card h-100 border-0 shadow-sm text-center p-4">
+
+                <div className="display-4 mb-3">
+                  👟
+                </div>
+
+                <h3 className="h5 fw-bold">
+                  Footwear
+                </h3>
+
+                <p className="text-secondary mb-0">
+                  Walk in your own style
+                </p>
+
+              </div>
+            </div>
+
+
+            {/* Home */}
+
+            <div className="col-12 col-sm-6 col-lg-3">
+              <div className="card h-100 border-0 shadow-sm text-center p-4">
+
+                <div className="display-4 mb-3">
+                  🏠
+                </div>
+
+                <h3 className="h5 fw-bold">
+                  Home
+                </h3>
+
+                <p className="text-secondary mb-0">
+                  Make your space better
+                </p>
+
+              </div>
+            </div>
+
+          </div>
 
         </div>
-
-        <div className="categories">
-
-          <div className="category-card">
-            <span>💻</span>
-            <h3>Electronics</h3>
-            <p>Latest gadgets & technology</p>
-          </div>
-
-          <div className="category-card">
-            <span>👕</span>
-            <h3>Fashion</h3>
-            <p>Style for every occasion</p>
-          </div>
-
-          <div className="category-card">
-            <span>👟</span>
-            <h3>Footwear</h3>
-            <p>Walk in your own style</p>
-          </div>
-
-          <div className="category-card">
-            <span>🏠</span>
-            <h3>Home</h3>
-            <p>Make your space better</p>
-          </div>
-
-        </div>
-
       </section>
 
 
       {/* ================= FEATURED PRODUCTS ================= */}
 
-      <section className="products-section">
+      <section className="bg-light py-5">
 
-        <div className="section-heading">
+        <div className="container py-5">
 
-          <span>TRENDING</span>
+          {/* Section Heading */}
 
-          <h2>Featured Products</h2>
+          <div className="text-center mb-5">
 
-          <p>
-            Popular products picked for you.
-          </p>
+            <span className="text-secondary fw-semibold">
+              TRENDING
+            </span>
 
-        </div>
+            <h2 className="display-5 fw-bold mt-2">
+              Featured Products
+            </h2>
 
-        <div className="product-grid">
+            <p className="text-secondary fs-5">
+              Popular products picked for you.
+            </p>
 
-          {featuredProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-            />
-          ))}
+          </div>
+
+
+          {/* Products */}
+
+          <div className="row g-4">
+
+            {featuredProducts.map((product) => (
+              <div
+                className="col-12 col-sm-6 col-lg-3"
+                key={product.id}
+              >
+                <ProductCard product={product} />
+              </div>
+            ))}
+
+          </div>
+
+
+          {/* View All */}
+
+          <div className="text-center mt-5">
+
+            <Link
+              to="/products"
+              className="btn btn-outline-dark btn-lg px-4"
+            >
+              View All Products →
+            </Link>
+
+          </div>
 
         </div>
 
@@ -140,27 +259,44 @@ function Home() {
 
       {/* ================= AI SECTION ================= */}
 
-      <section className="ai-section">
+      <section className="py-5">
 
-        <div className="ai-content">
+        <div className="container py-5">
 
-          <span>✨ SMARTCART AI</span>
+          <div className="row justify-content-center">
 
-          <h2>
-            Don't know what to buy?
-            <br />
-            Just ask.
-          </h2>
+            <div className="col-lg-9">
 
-          <p>
-            Tell SmartCart what you need, your budget and your
-            preferences. Our AI assistant will help you find
-            the right products.
-          </p>
+              <div className="bg-dark text-white rounded-4 p-5 text-center">
 
-          <button className="ai-large-btn">
-            Start Shopping with AI →
-          </button>
+                <span className="text-light fw-semibold">
+                  ✨ SMARTCART AI
+                </span>
+
+                <h2 className="display-5 fw-bold mt-3">
+                  Don't know what to buy?
+                  <br />
+                  Just ask.
+                </h2>
+
+                <p className="lead text-white-50 mx-auto my-4" style={{ maxWidth: "700px" }}>
+                  Tell SmartCart what you need, your budget and your
+                  preferences. Our AI assistant will help you find
+                  the right products.
+                </p>
+
+                <button
+                  className="btn btn-light btn-lg px-4"
+                  onClick={openAIChat}
+                >
+                  Start Shopping with AI →
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
 
         </div>
 

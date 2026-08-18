@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const orderRoutes = require("./routes/orderRoutes");
 const aiRoutes = require("./routes/aiRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.get("/", (req, res) => {
 });
 app.use("/api/orders", orderRoutes);
 app.use("/api/ai", aiRoutes);
+app.use("/api/auth", authRoutes);
 
 // Start server
 const PORT = 5000;
