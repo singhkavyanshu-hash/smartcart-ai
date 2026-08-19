@@ -1,20 +1,25 @@
 # 🛒 SmartCart — AI-Powered E-Commerce Platform
 
-SmartCart is a full-stack e-commerce web application that provides a modern shopping experience with secure authentication, product browsing, shopping cart management, order processing, and an AI-powered shopping assistant.
+SmartCart is a full-stack e-commerce web application designed to provide a modern and intelligent shopping experience.
 
-The application is built using React, Node.js, Express.js, and PostgreSQL and is deployed on Render.
+The application includes secure authentication, product browsing, product filtering, shopping cart management, checkout, order processing, stock management, order history, and an AI-powered shopping assistant.
+
+Built with **React, Node.js, Express.js, PostgreSQL, and OpenRouter AI**, SmartCart is deployed using **Render**.
 
 ---
 
 ## 🚀 Live Demo
 
 ### 🌐 Frontend
+
 https://smartcart-frontend-1hm2.onrender.com
 
 ### ⚙️ Backend API
+
 https://smartcart-backend-0ybg.onrender.com
 
 ### ❤️ Backend Health Check
+
 https://smartcart-backend-0ybg.onrender.com/health
 
 ---
@@ -22,58 +27,75 @@ https://smartcart-backend-0ybg.onrender.com/health
 ## ✨ Features
 
 ### 👤 Authentication
+
 - User registration
 - User login
 - JWT-based authentication
 - Protected routes
-- Secure user-specific order access
+- User-specific order access
 - Logout functionality
+- Password hashing using bcrypt
 
 ### 🛍️ Product Management
-- Browse available products
-- Product details page
+
+- Browse products
+- Product details
 - Product pricing
 - Product stock availability
 - Out-of-stock handling
+- Search products
+- Category filtering
+- Product sorting
 - Responsive product cards
 
 ### 🛒 Shopping Cart
+
 - Add products to cart
-- Remove products
-- Increase/decrease product quantity
+- Remove products from cart
+- Increase product quantity
+- Decrease product quantity
 - Automatic cart total calculation
-- Stock-aware purchasing
+- Stock-aware cart management
+- Cart validation before checkout
 
 ### 📦 Order Management
+
 - Checkout system
 - Customer shipping information
 - Database-backed order creation
 - Order item storage
-- Automatic total calculation
-- Stock reduction after successful orders
+- Automatic order total calculation
+- Automatic stock reduction after successful orders
 - Order history
 - Individual order details
 
 ### 🤖 SmartCart AI
+
 - AI-powered shopping assistant
-- Users can ask product-related questions
-- AI assistance for shopping decisions
+- Product-related questions
+- Shopping recommendations
+- Product comparison assistance
+- Budget-based product selection
+- AI-assisted cart actions
 - Integrated with OpenRouter API
 
 ### 🔐 Security
+
 - JWT authentication
 - Password hashing with bcrypt
-- Environment variables for secrets
+- Environment variables for sensitive information
 - Protected API routes
-- Database-backed authentication
+- User-specific data access
 - `.env` files excluded from Git
 
 ### ☁️ Deployment
-- Frontend deployed on Render
-- Backend deployed on Render
+
+- React frontend deployed on Render
+- Node.js/Express backend deployed on Render
 - PostgreSQL database hosted on Render
 - Production environment variables
 - REST API architecture
+- Automatic deployment through GitHub
 
 ---
 
@@ -84,10 +106,10 @@ https://smartcart-backend-0ybg.onrender.com/health
 - React
 - Vite
 - React Router
-- Bootstrap
 - JavaScript
 - HTML5
 - CSS3
+- Bootstrap
 
 ### Backend
 
@@ -103,39 +125,68 @@ https://smartcart-backend-0ybg.onrender.com/health
 
 - PostgreSQL
 - node-postgres (`pg`)
+- pgAdmin
 
 ### AI
 
 - OpenRouter API
 
-### Deployment & Tools
+### Development & Deployment
 
 - Git
 - GitHub
 - Render
-- pgAdmin
 - VS Code
+
+---
+
+## 📸 Screenshots
+
+### 🏠 Home Page
+
+![SmartCart Home](screenshots/home.jpeg)
+
+### 🛍️ Products
+
+![SmartCart Products](screenshots/products.jpeg)
+
+### 🛒 Shopping Cart
+
+![SmartCart Cart](screenshots/cart.jpeg)
+
+### 📦 My Orders
+
+![SmartCart Orders](screenshots/orders.jpeg)
+
+### 📋 Order Details
+
+![SmartCart Order Details](screenshots/order-details.jpeg)
+
+### 🤖 AI Shopping Assistant
+
+![SmartCart AI Assistant](screenshots/ai-assistant.jpeg)
 
 ---
 
 ## 🏗️ Project Architecture
 
 ```text
-                    ┌──────────────────────┐
-                    │      React + Vite    │
-                    │       Frontend       │
-                    └──────────┬───────────┘
-                               │
-                               │ REST API
-                               ▼
-                    ┌──────────────────────┐
-                    │   Node.js + Express  │
-                    │       Backend        │
-                    └───────┬───────┬──────┘
-                            │       │
-                 ┌──────────┘       └──────────┐
-                 ▼                             ▼
-       ┌──────────────────┐          ┌─────────────────┐
-       │    PostgreSQL    │          │  OpenRouter AI  │
-       │     Database     │          │       API       │
-       └──────────────────┘          └─────────────────┘
+                         ┌───────────────────────┐
+                         │     React + Vite      │
+                         │       Frontend       │
+                         └───────────┬───────────┘
+                                     │
+                                     │ REST API
+                                     ▼
+                         ┌───────────────────────┐
+                         │    Node.js + Express  │
+                         │        Backend        │
+                         └───────────┬───────────┘
+                                     │
+                    ┌────────────────┼────────────────┐
+                    │                │                │
+                    ▼                ▼                ▼
+          ┌────────────────┐ ┌───────────────┐ ┌────────────────┐
+          │   PostgreSQL   │ │ OpenRouter AI │ │ JWT / bcrypt   │
+          │    Database    │ │      API      │ │ Authentication │
+          └────────────────┘ └───────────────┘ └────────────────┘
