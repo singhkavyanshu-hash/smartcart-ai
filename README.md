@@ -6,6 +6,7 @@ Built with **React.js, Node.js, Express.js, PostgreSQL, and OpenRouter**, the pr
 
 <p align="center">
   <a href="https://smartcart-frontend-1hm2.onrender.com/">🌐 Live Demo</a> •
+  <a href="https://github.com/singhkavyanshu-hash/smartcart-ai">💻 Source Code</a> •
   <a href="https://smartcart-backend-0ybg.onrender.com/health">⚙️ API Health Check</a>
 </p>
 
@@ -86,7 +87,7 @@ Built with **React.js, Node.js, Express.js, PostgreSQL, and OpenRouter**, the pr
 ## 🏗️ Project Structure
 
 ```text
-smartcart-ai/
+smartcart/
 ├── frontend/
 │   ├── src/
 │   ├── public/
