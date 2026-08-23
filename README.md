@@ -1,4 +1,4 @@
-# 🛒 SmartCart — Full-Stack E-Commerce Platform
+# 🛒 SmartCart — AI-Powered Full-Stack E-Commerce Platform
 
 **SmartCart** is a deployed full-stack e-commerce web application that combines a complete shopping workflow with an AI-powered shopping assistant.
 
