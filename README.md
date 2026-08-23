@@ -1,6 +1,6 @@
-# 🛒 SmartCart AI — Full-Stack E-Commerce Platform
+# 🛒 SmartCart — Full-Stack E-Commerce Platform
 
-**SmartCart AI** is a deployed full-stack e-commerce web application that combines a complete shopping workflow with an AI-powered shopping assistant.
+**SmartCart** is a deployed full-stack e-commerce web application that combines a complete shopping workflow with an AI-powered shopping assistant.
 
 Built with **React.js, Node.js, Express.js, PostgreSQL, and OpenRouter**, the project demonstrates practical experience in frontend development, REST APIs, authentication, database integration, inventory handling, deployment, and third-party AI integration.
 
