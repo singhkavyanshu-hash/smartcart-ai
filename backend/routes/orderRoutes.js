@@ -7,6 +7,8 @@ const {
 } = require("../controllers/orderController");
 
 const authMiddleware = require("../middleware/authMiddleware");
+const validate = require("../middleware/validationMiddleware");
+const { orderSchema } = require("../validators/orderValidator");
 
 const router = express.Router();
 
@@ -14,7 +16,7 @@ const router = express.Router();
 router.use(authMiddleware);
 
 // Create order
-router.post("/", createOrder);
+router.post("/", validate(orderSchema), createOrder);
 
 // Get logged-in user's orders
 router.get("/", getOrdersByEmail);
