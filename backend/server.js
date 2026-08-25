@@ -8,6 +8,8 @@ const orderRoutes = require("./routes/orderRoutes");
 const aiRoutes = require("./routes/aiRoutes");
 const authRoutes = require("./routes/authRoutes");
 
+const errorHandler = require("./middleware/errorHandler");
+
 const app = express();
 
 // ================= MIDDLEWARE =================
@@ -39,13 +41,7 @@ app.get("/health", (req, res) => {
 
 // ================= ERROR HANDLER =================
 
-app.use((err, req, res, next) => {
-  console.error("Server error:", err);
-
-  res.status(500).json({
-    message: "Internal server error.",
-  });
-});
+app.use(errorHandler);
 
 // ================= START SERVER =================
 

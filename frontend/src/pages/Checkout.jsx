@@ -48,6 +48,7 @@ function Checkout() {
         headers: getAuthHeaders(token),
         body: JSON.stringify({
           customer_name: formData.name,
+          email: formData.email,
           phone: formData.phone,
           address: formData.address,
           city: formData.city,
